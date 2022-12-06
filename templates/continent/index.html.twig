@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}La liste des Continents :
+{% endblock %}
+{% block titre %}<h1>La Liste des continents</h1>{% endblock %}
+{% block body %}
+	{% for continent in continents %}
+		<div>
+			<p>{{continent.name}}</p>
+			<p>{{continent.description}}</p>
+		</div>
+	{% endfor %}
+{% endblock %}
