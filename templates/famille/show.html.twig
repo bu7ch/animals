@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Familles
+{% endblock %}
+
+{% block body %}
+
+<div>
+	{{famille.description}}
+</div>
+<div class="row">
+	<ul>
+		{% for animal in famille.animaux %}
+			<li>
+				<img src="{{asset(animal.image)}}" alt="img" class="img-fluid" width="200px">
+				<a href="{{path("animal-show", {"id": animal.id})}}">{{animal.name}}</a>
+				<div>{{animal.description}}</div>
+				<div>{{animal.famille.libelle}}</div>
+			</li>
+
+		{% endfor %}
+	</ul>
+</div>
+{% endblock %}

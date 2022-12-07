@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Famille
+{% endblock %}
+
+{% block body %}
+	<h2>Liste des Familles</h2>
+
+	{% for famille in familles %}
+		<a href="{{path("show_famille", {"id": famille.id})}}">
+			{{famille.libelle|capitalize }}</a>
+		<hr>
+		<div>
+			<p>{{famille.description}}</p>
+		</div>
+
+	{% endfor %}
+
+{% endblock %}

@@ -6,7 +6,7 @@
 {% block body %}
 	{% for continent in continents %}
 		<div>
-			<p>{{continent.name}}</p>
+			<a href="{{path("continent-show",{"id": continent.id})}}"class='text-danger'>{{continent.name}}</a>
 			<p>{{continent.description}}</p>
 		</div>
 	{% endfor %}

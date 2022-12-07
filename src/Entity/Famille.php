@@ -2,13 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\ContinentRepository;
+use App\Repository\FamilleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: ContinentRepository::class)]
-class Continent
+#[ORM\Entity(repositoryClass: FamilleRepository::class)]
+class Famille
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -16,12 +17,12 @@ class Continent
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $name = null;
+    private ?string $libelle = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
-    #[ORM\ManyToMany(targetEntity: Animal::class, inversedBy: 'continents')]
+    #[ORM\OneToMany(mappedBy: 'famille', targetEntity: Animal::class)]
     private Collection $animaux;
 
     public function __construct()
@@ -34,14 +35,14 @@ class Continent
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getLibelle(): ?string
     {
-        return $this->name;
+        return $this->libelle;
     }
 
-    public function setName(string $name): self
+    public function setLibelle(string $libelle): self
     {
-        $this->name = $name;
+        $this->libelle = $libelle;
 
         return $this;
     }
@@ -70,6 +71,7 @@ class Continent
     {
         if (!$this->animaux->contains($animaux)) {
             $this->animaux->add($animaux);
+            $animaux->setFamille($this);
         }
 
         return $this;
@@ -77,7 +79,12 @@ class Continent
 
     public function removeAnimaux(Animal $animaux): self
     {
-        $this->animaux->removeElement($animaux);
+        if ($this->animaux->removeElement($animaux)) {
+            // set the owning side to null (unless already changed)
+            if ($animaux->getFamille() === $this) {
+                $animaux->setFamille(null);
+            }
+        }
 
         return $this;
     }

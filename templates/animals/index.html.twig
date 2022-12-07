@@ -5,7 +5,7 @@
 {% block body %}
 {% for animal in animaux %}
 <div>
-  <p class='text-danger'><strong>{{animal.name}}</strong></p>
+  <a class='text-danger' href="{{path("animal-show",{id: animal.id})}}"><strong>{{animal.name}}</strong></a>
   <p>{{animal.description}}</p>
 </div>
   

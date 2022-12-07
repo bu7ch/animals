@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+Les infos sur l'animal : {{animal.name}} 
+{% endblock %}
+
+{% block body %}
+
+<img src="{{asset("images/animals/" ~ animal.name ~ ".jpeg")}}" alt="">
+<div>
+  <p class='text-danger'><strong>{{animal.name}}</strong></p>
+  <p>{{animal.description}}</p>
+  <p> <strong>Dangereux</strong> :
+  {% if animal.dangereux %}
+  <span class="btn btn-danger">OUI</span>
+  {% else %}
+    <span class="btn btn-success">NON</span>
+  {% endif %}
+  </p>
+</div>
+{% endblock %}
